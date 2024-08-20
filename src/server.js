@@ -1,5 +1,4 @@
 const http = require('http');
-const url = require('url');
 const query = require('querystring');
 const htmlHandler = require('./htmlResponses.js');
 const jsonHandler = require('./jsonResponses.js');
@@ -14,14 +13,14 @@ const urlStruct = {
 };
 
 const onRequest = (request, response) => {
-  const parsedUrl = url.parse(request.url);
-  
+  const protocol = request.connection.encrypted ? 'https' : 'http';
+  const parsedUrl = new URL(request.url, `${protocol}://${request.headers.host}`);
 
   const handlerFunc = urlStruct[parsedUrl.pathname];
   if (handlerFunc) {
-    handlerFunc(request, response, params);
+    handlerFunc(request, response);
   } else {
-    urlStruct.notFound(request, response, params);
+    urlStruct.notFound(request, response);
   }
 
 };

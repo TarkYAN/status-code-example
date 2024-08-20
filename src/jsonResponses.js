@@ -12,7 +12,7 @@ const success = (request, response) => {
   return respondJSON(request, response, 200, responseJSON);
 };
 
-const badRequest = (request, response, params) => {
+const badRequest = (request, response) => {
   const responseJSON = {
     message: 'This request has the required parameters',
   };
