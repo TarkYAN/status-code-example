@@ -1,6 +1,10 @@
 const respondJSON = (request, response, status, object) => {
-  response.writeHead(status, { 'Content-Type': 'application/json' });
-  response.write(JSON.stringify(object));
+  const content = JSON.stringify(object);
+  response.writeHead(status, { 
+    'Content-Type': 'application/json',
+    'Content-Length': Buffer.byteLength(content, 'utf8'),
+  });
+  response.write(content);
   response.end();
 };
 
