@@ -16,9 +16,8 @@ const onRequest = (request, response) => {
   const protocol = request.connection.encrypted ? 'https' : 'http';
   const parsedUrl = new URL(request.url, `${protocol}://${request.headers.host}`);
 
-  const handlerFunc = urlStruct[parsedUrl.pathname];
-  if (handlerFunc) {
-    handlerFunc(request, response);
+  if (urlStruct[parsedUrl.pathname]) {
+    urlStruct[parsedUrl.pathname](request, response);
   } else {
     urlStruct.notFound(request, response);
   }
